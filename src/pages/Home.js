@@ -13,9 +13,11 @@ import Footer from "../components/Footer/Footer";
 import { SliderData } from "../components/SliderSection/SliderData";
 import ScrollToTop from "../components/ScrollToTop";
 import AccountSidebar from "../components/AccountSidebar/AccountSidebar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../actions/productAction";
 
 const Home = () => {
+  const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo, success } = userLogin;
 
@@ -27,6 +29,7 @@ const Home = () => {
     if (success) {
       setShow(true);
     }
+    dispatch(getProducts());
   }, [success]);
 
   return (

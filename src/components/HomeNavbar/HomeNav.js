@@ -23,6 +23,9 @@ import { animateScroll as scroll } from "react-scroll";
 import { bool, func } from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../actions/userAction.js";
+import { Link } from "react-router-dom";
+import { Navbar, NavDropdown } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
 const Nav = ({ open, setOpen, show, setShow }) => {
   const dispatch = useDispatch();
@@ -50,23 +53,67 @@ const Nav = ({ open, setOpen, show, setShow }) => {
               <MenuIcon />
             </MobileIcon>
             <Logo>
-              <Img src={logo} onClick={toggleHome} alt="logo" />
+              <Link to="/">
+                <Img src={logo} onClick={toggleHome} alt="logo" />
+              </Link>
             </Logo>
             <HeaderMetaRight>
               <Button>
                 <SearchOutlinedIcon />
               </Button>
               {userInfo ? (
-                <span onClick={handleLogout} style={{ cursor: "pointer" }}>
-                  {userInfo.name}
-                </span>
+                // <div class="dropdown">
+                //   <button
+                //     class="btn btn-secondary dropdown-toggle"
+                //     type="button"
+                //     id="dropdownMenuButton1"
+                //     data-bs-toggle="dropdown"
+                //     aria-expanded="false"
+                //   >
+                //     {userInfo.name}
+                //   </button>
+                //   <ul
+                //     class="dropdown-menu"
+                //     aria-labelledby="dropdownMenuButton1"
+                //   >
+                //     {userInfo.isAdmin && (
+                //       <li>
+                //         <Link class="dropdown-item" to="/admin/product">
+                //           Product
+                //         </Link>
+                //       </li>
+                //     )}
+                //     <li>
+                //       <a class="dropdown-item" href="#" onClick={handleLogout}>
+                //         Logout
+                //       </a>
+                //     </li>
+                //   </ul>
+                // </div>
+                <NavDropdown title="Admin" id="adminmenu">
+                  <LinkContainer to="/admin/userlist">
+                    <NavDropdown.Item>Users</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/product">
+                    <NavDropdown.Item>Products</NavDropdown.Item>
+                  </LinkContainer>
+                  {/* <LinkContainer to="/admin/orderlist">
+                    <NavDropdown.Item>Orders</NavDropdown.Item>
+                  </LinkContainer> */}
+                  <LinkContainer to="/#" onClick={handleLogout}>
+                    <NavDropdown.Item>Logout</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
               ) : (
                 <Button show={show} onClick={() => setShow(!show)}>
                   <PermIdentityOutlinedIcon />
                 </Button>
               )}
+
               <Button>
-                <ShoppingCartOutlinedIcon />
+                <LinkContainer to="/cart">
+                  <ShoppingCartOutlinedIcon />
+                </LinkContainer>
               </Button>
             </HeaderMetaRight>
           </HeaderMeta>
