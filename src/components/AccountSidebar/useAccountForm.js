@@ -11,11 +11,11 @@ const useAccountForm = (validate) => {
   const userLoginState = useSelector((state) => state.userLogin);
   const { success, userInfo } = userLoginState;
 
-  useEffect(() => {
-    if (success) {
-      navigate("/");
-    }
-  }, [success]);
+  // useEffect(() => {
+  //   if (!userInfo) {
+  //     navigate("/");
+  //   }
+  // }, [userInfo]);
 
   const [values, setValues] = useState({
     //passing an array where values is initial values and the function to update the state

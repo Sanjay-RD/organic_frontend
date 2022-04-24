@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Nav from "../components/HomeNavbar/HomeNav";
 import {
   Row,
@@ -11,26 +11,47 @@ import {
   Container,
   Alert,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { url } from "../utils/env";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeToCart } from "../actions/cartAction";
+import AccountSidebar from "../components/AccountSidebar/AccountSidebar";
 
 const CartPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(true);
   const productAddToCart = useSelector((state) => state.productAddToCart);
   const { cartItem } = productAddToCart;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo, success } = userLogin;
 
   const handleAddToCart = (uuid, qty) => {
     console.log("id", uuid);
     dispatch(addToCart(uuid, qty));
   };
+
+  const checkoutHandler = () => {
+    if (userInfo) {
+      console.log("first");
+      navigate("/shipping");
+    } else {
+      console.log("second");
+      setShow(false);
+    }
+  };
+
+  useEffect(() => {
+    if (success) {
+      setShow(true);
+    }
+  }, [success]);
   return (
     <div>
       {" "}
       <Nav open={open} setOpen={setOpen} show={show} setShow={setShow} />{" "}
+      <AccountSidebar show={show} setShow={setShow} />
       <Container>
         <Row className="mt-5">
           <Col md={8}>
@@ -60,7 +81,7 @@ const CartPage = () => {
                       <Col md={2}>
                         <Form.Control
                           as="select"
-                          value={item.qty}
+                          defaultValue={item.qty}
                           onChange={(e) =>
                             handleAddToCart(
                               item.product,
@@ -112,8 +133,8 @@ const CartPage = () => {
                   <Button
                     type="button"
                     className="btn-block"
-                    // disabled={cartItem.length === 0}
-                    // onClick={checkoutHandler}
+                    disabled={cartItem.length === 0}
+                    onClick={checkoutHandler}
                   >
                     Proceed To Checkout
                   </Button>

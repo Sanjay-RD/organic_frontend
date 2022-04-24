@@ -4,13 +4,19 @@ import { Table, Button, Row, Col, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../actions/productAction";
+import {
+  deleteProduct,
+  getProduct,
+  getProducts,
+} from "../actions/productAction";
 
 const ProductListPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const productAdd = useSelector((state) => state.productAdd);
   const { success } = productAdd;
+  const productDelete = useSelector((state) => state.productDelete);
+  const { success: deleteSuccess } = productDelete;
   const listProducts = useSelector((state) => state.listProducts);
   const { products } = listProducts;
 
@@ -23,7 +29,7 @@ const ProductListPage = () => {
 
   useEffect(() => {
     dispatch(getProducts());
-  }, [success]);
+  }, [success, deleteSuccess]);
   return (
     <div>
       <Nav open={open} setOpen={setOpen} show={show} setShow={setShow} />{" "}
@@ -66,7 +72,10 @@ const ProductListPage = () => {
                   <td>{product.category}</td>
                   <td>{product.sub_category}</td>
                   <td>
-                    <LinkContainer to={`/admin/product/add`}>
+                    <LinkContainer
+                      to={`/admin/product/update/${product.uuid}`}
+                      // onClick={() => dispatch(getProduct(product.uuid))}
+                    >
                       <Button variant="light" className="btn-sm">
                         <i className="fas fa-edit"></i>
                       </Button>
@@ -74,7 +83,7 @@ const ProductListPage = () => {
                     <Button
                       variant="danger"
                       className="btn-sm"
-                      // onClick={() => deleteHandler(product._id)}
+                      onClick={() => dispatch(deleteProduct(product.uuid))}
                     >
                       <i className="fas fa-trash"></i>
                     </Button>

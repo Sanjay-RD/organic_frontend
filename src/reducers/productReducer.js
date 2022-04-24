@@ -108,3 +108,56 @@ export const productAddReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const productEditReducer = (state = {}, action) => {
+  switch (action.type) {
+    case EDIT_PRODUCT_REQUEST:
+      return {
+        loading: true,
+      };
+    case EDIT_PRODUCT_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        // product: action.payload,
+      };
+    case EDIT_PRODUCT_FAIL:
+      return {
+        loading: true,
+        error: action.payload,
+      };
+    case EDIT_PRODUCT_RESET:
+      return {
+        loading: true,
+        success: false,
+      };
+    default:
+      return state;
+  }
+};
+
+export const productDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_PRODUCT_REQUEST:
+      return {
+        loading: true,
+      };
+    case DELETE_PRODUCT_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case DELETE_PRODUCT_FAIL:
+      return {
+        loading: true,
+        error: action.payload,
+      };
+    case DELETE_PRODUCT_RESET:
+      return {
+        loading: true,
+        success: false,
+      };
+    default:
+      return state;
+  }
+};

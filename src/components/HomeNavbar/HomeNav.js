@@ -90,13 +90,20 @@ const Nav = ({ open, setOpen, show, setShow }) => {
                 //     </li>
                 //   </ul>
                 // </div>
-                <NavDropdown title="Admin" id="adminmenu">
-                  <LinkContainer to="/admin/userlist">
+                <NavDropdown title={userInfo.name} id="adminmenu">
+                  {/* <LinkContainer to="/admin/userlist">
                     <NavDropdown.Item>Users</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/product">
-                    <NavDropdown.Item>Products</NavDropdown.Item>
-                  </LinkContainer>
+                  </LinkContainer> */}
+                  {userInfo.isAdmin && (
+                    <LinkContainer to="/admin/product">
+                      <NavDropdown.Item>Products</NavDropdown.Item>
+                    </LinkContainer>
+                  )}
+                  {userInfo.isAdmin && (
+                    <LinkContainer to="/admin/order">
+                      <NavDropdown.Item>Order</NavDropdown.Item>
+                    </LinkContainer>
+                  )}
                   {/* <LinkContainer to="/admin/orderlist">
                     <NavDropdown.Item>Orders</NavDropdown.Item>
                   </LinkContainer> */}

@@ -87,13 +87,9 @@ export const addProduct =
   async (dispatch, getState) => {
     try {
       dispatch({ type: ADD_PRODUCT_REQUEST });
-      const {
-        userLogin: { userInfo },
-      } = getState();
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.token}`,
         },
       };
 
@@ -122,3 +118,74 @@ export const addProduct =
       });
     }
   };
+
+export const editProduct =
+  (name, price, image, category, sub_category, description, product_id) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: EDIT_PRODUCT_REQUEST });
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const { data } = await axios.put(
+        `${baseUrl}/product/${product_id}`,
+        { name, price, image, category, sub_category, description },
+        config
+      );
+      toast.info("Product Updated Successfully", {
+        autoClose: 1000,
+      });
+      dispatch({
+        type: EDIT_PRODUCT_SUCCESS,
+        payload: data,
+      });
+    } catch (err) {
+      toast.error("Invalid Data", {
+        autoClose: 1000,
+      });
+      dispatch({
+        type: EDIT_PRODUCT_FAIL,
+        payload:
+          err.response && err.response.data.message
+            ? err.response.data.message
+            : err.message,
+      });
+    }
+  };
+
+export const deleteProduct = (product_id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: DELETE_PRODUCT_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.delete(
+      `${baseUrl}/product/${product_id}`,
+      config
+    );
+    toast.info("Product Delete Successfully", {
+      autoClose: 1000,
+    });
+    dispatch({
+      type: DELETE_PRODUCT_SUCCESS,
+      payload: data,
+    });
+  } catch (err) {
+    toast.error("Invalid Data", {
+      autoClose: 1000,
+    });
+    dispatch({
+      type: DELETE_PRODUCT_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    });
+  }
+};
