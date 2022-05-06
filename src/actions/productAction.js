@@ -56,6 +56,33 @@ export const getProducts = () => async (dispatch) => {
     });
   }
 };
+export const getProductsByCategory = (tag, categoryId) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_PRODUCT_BY_CATEGORY_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.get(
+      `${baseUrl}/product/category/${tag}/${categoryId}`,
+      config
+    );
+
+    dispatch({
+      type: GET_PRODUCT_BY_CATEGORY_SUCCESS,
+      payload: data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_PRODUCT_BY_CATEGORY_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    });
+  }
+};
 
 export const getProduct = (uuid) => async (dispatch) => {
   try {

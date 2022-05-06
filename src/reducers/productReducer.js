@@ -57,6 +57,30 @@ export const listProductsReducer = (state = {}, action) => {
       return state;
   }
 };
+export const listProductsByCategoryReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_PRODUCT_BY_CATEGORY_REQUEST:
+      return {
+        loading: true,
+      };
+    case GET_PRODUCT_BY_CATEGORY_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        products: action.payload,
+      };
+
+    case GET_PRODUCT_BY_CATEGORY_FAIL:
+      return {
+        loading: true,
+        success: false,
+        error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
 
 export const listProductReducer = (state = {}, action) => {
   switch (action.type) {

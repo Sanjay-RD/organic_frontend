@@ -15,6 +15,7 @@ import PaymentPage from "./pages/PaymentPage";
 import PlaceOrderPage from "./pages/PlaceOrderPage";
 import OrderPage from "./pages/OrderPage";
 import OrderListPage from "./pages/OrderListPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
 // import Contact from './components/Contact/Contact';
 
 function App() {
@@ -30,6 +31,11 @@ function App() {
         <Route exact path="/placeorder" element={<PlaceOrderPage />} />
         <Route exact path="/order/:uuid" element={<OrderPage />} />
         <Route exact path="/product/:tag" element={<ProductPage />} />
+        <Route
+          exact
+          path="/product/:productName/:uuid"
+          element={<ProductDetailPage />}
+        />
         <Route exact path="/admin/product" element={<ProductListPage />} />
         <Route exact path="/admin/product/add" element={<ProductAddPage />} />
         <Route
