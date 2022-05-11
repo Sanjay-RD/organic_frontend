@@ -13,9 +13,13 @@ const Product = ({ product }) => {
     dispatch(addToCart(uuid, qty));
   };
   return (
-    <Card className="my-3 rounded">
+    <Card className="my-3 rounded" style={{ height: "300px" }}>
       <Link to={`/product/${product.name}/${product.uuid}`}>
-        <Card.Img src={`${url}${product.image}`} variant="top" />
+        <Card.Img
+          src={`${url}${product.image}`}
+          variant="top"
+          style={{ height: "145px" }}
+        />
       </Link>
       <Card.Body>
         <Link to={`/product/${product.uuid}`}>

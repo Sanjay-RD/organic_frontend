@@ -44,7 +44,7 @@ const ProductPage = () => {
                 <option value="1">A-Z</option>
                 <option value="2">Z-A</option>
                 <option value="3">Low - High</option>
-                <option value="3">High - Low</option>
+                <option value="4">High - Low</option>
               </select>
             </div>
           </div>
